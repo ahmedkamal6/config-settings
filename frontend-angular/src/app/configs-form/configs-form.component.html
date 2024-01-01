@@ -1,0 +1,138 @@
+<div class="container mx-auto">
+  <form
+  class="m-10 border-4 border-primary p-3"
+  form
+  [formGroup]="yourForm"
+  method="post"
+>
+  <section id="map-settings">
+    <div class="text-2xl font-bold mb-4">
+      <h3 class="inline underline-offset-8 underline decoration-4  decoration-slate-700">Map </h3>
+      <h3 class="inline">Settings</h3>
+    </div>
+
+    <div class="columns-2 relative gap-32 items-center">
+      <div class="border-1 border-[#cfcfcf] px-4 py-px flex items-center rounded-sm relative">
+        <ng-icon class="text-red-600" name="ionAlertCircleOutline"></ng-icon><label class="basis-3/6" for="cluster-radius">Cluster Radius</label>
+        <input
+          type="number"
+          name="cluster-radius"
+          id="cluster-radius"
+          class="basis-2/6 p-2 mr-4 h-full bg-[#e6e6e6] rounded-sm text-center"
+          formControlName="clusterRadius"
+          (keypress)="numberChange($event)"
+        />
+        <span class="absolute left-3/4 top-30" [hidden]="!yourForm.get('clusterRadius')?.errors"><ng-icon class="text-red-600" name="ionAlertCircleOutline"></ng-icon></span>
+        <span class="basis-1/6 pl-8">M</span>
+      </div>
+      <div class="border-1 border-[#cfcfcf] px-4 py-2 flex items-center rounded-sm justify-between">
+        <div class="flex items-center"><ng-icon class="text-red-600" name="ionAlertCircleOutline"></ng-icon><label for="geo-fencing">Geo - fencing</label></div>
+        <mat-slide-toggle 
+        name="geo-fencing"
+        id="geo-fencing"
+        color="green"
+        formControlName="geoFencing"></mat-slide-toggle>
+      </div>
+    </div>
+
+    <div class="text-xs absolute left-1/4 text-red-600" *ngIf="yourForm.get('clusterRadius')?.errors">
+      <span [ngClass]="{'font-bold':yourForm.get('clusterRadius')?.hasError('isZero')}"> zero is not allowed, </span>
+      <span [ngClass]="{'font-bold':yourForm.get('clusterRadius')?.hasError('outOfRange')}"> the value must be between 0.01 and 99 </span>
+    </div>
+
+  </section>
+
+  <section id="duplication-event-configuration" class="mt-12">
+
+    <div class="text-2xl font-bold mb-4">
+      <h3 class="inline underline-offset-8 underline decoration-4  decoration-slate-700">Dupli</h3>
+      <h3 class="inline">cation Event Configuration</h3>
+    </div>
+
+    <div class="columns-2 relative gap-32 items-center">
+      <div class="border-1 border-[#cfcfcf] px-4 py-px flex items-center rounded-sm relative">
+        <ng-icon class="text-red-600" name="ionAlertCircleOutline"></ng-icon><label class="basis-3/6" for="time-buffer">Time Buffer</label>
+        <input
+      type="number"
+      name="time-buffer"
+      id="time-buffer"
+      class="basis-2/6 p-2 mr-4 h-full  bg-[#e6e6e6] rounded-sm text-center"
+      formControlName="timeBuffer"
+      (keypress)="numberChange($event)"
+    />
+      <span class="absolute left-3/4 top-30" [hidden]="!yourForm.get('timeBuffer')?.errors"><ng-icon class="text-red-600" name="ionAlertCircleOutline"></ng-icon></span>
+      <span class="basis-1/6 pl-8">Minutes</span>
+    </div>
+      <div class="border-1 border-[#cfcfcf] px-4 py-px flex items-center rounded-sm justify-between relative">
+    <ng-icon class="text-red-600" name="ionAlertCircleOutline"></ng-icon><label class="basis-3/6" for="location-buffer">Location Buffer</label>
+    <input
+    type="number"
+    name="location-buffer"
+    id="location-buffer"
+    class="basis-2/6 p-2 mr-4 h-full  bg-[#e6e6e6] rounded-sm text-center"
+    formControlName="locationBuffer"
+    (keypress)="numberChange($event)"
+    />
+    <span class="absolute left-3/4 top-30" [hidden]="!yourForm.get('locationBuffer')?.errors"><ng-icon class="text-red-600" name="ionAlertCircleOutline"></ng-icon></span>
+    <span class="basis-1/6 pl-8">KM</span>
+      </div>
+    </div>
+      <div class="text-xs absolute left-1/4 text-red-600" *ngIf="yourForm.get('timeBuffer')?.errors">
+        <span [ngClass]="{'font-bold':yourForm.get('timeBuffer')?.hasError('isZero')}"> Zero is not allowed, </span>
+        <span [ngClass]="{'font-bold':yourForm.get('timeBuffer')?.hasError('outOfRange')}"> the value must be between 1 and 999 </span>
+      </div>
+      <div class="text-xs absolute right-1/10 text-red-600" *ngIf="yourForm.get('locationBuffer')?.errors">
+        <span [ngClass]="{'font-bold':yourForm.get('locationBuffer')?.hasError('isZero')}"> Zero is not allowed, </span>
+        <span [ngClass]="{'font-bold':yourForm.get('locationBuffer')?.hasError('outOfRange')}"> the value must be between 1 and 9.999 </span>
+      </div>
+  </section>
+  <section class="mt-12">
+    <div class="text-2xl font-bold mb-4">
+      <h3 class="inline underline-offset-8 underline decoration-4  decoration-slate-700">End E</h3>
+      <h3 class="inline">vent Duration</h3>
+    </div>
+    <div class="columns-2 relative gap-32 items-center">
+      <div class="border-1 border-[#cfcfcf] px-4 py-px flex items-center rounded-sm justify-between relative">
+      <ng-icon class="text-red-600" name="ionAlertCircleOutline"></ng-icon><label class="basis-3/6" for="duration">Duration</label>
+      <input
+        type="number"
+        name="duration"
+        id="duration"
+        class="basis-2/6 p-2 mr-4 h-full  bg-[#e6e6e6] rounded-sm text-center"
+        formControlName="duration"
+        (keypress)="numberChange($event)"
+      />
+      <span class="absolute left-3/4 top-30" [hidden]="!yourForm.get('duration')?.errors"><ng-icon class="text-red-600" name="ionAlertCircleOutline"></ng-icon></span>
+      <span class="basis-1/6 pl-8">Minutes</span>
+      </div>
+    </div>
+    <div class="text-xs absolute left-1/4 text-red-600" *ngIf="yourForm.get('duration')?.errors">
+      <span [ngClass]="{'font-bold':yourForm.get('duration')?.hasError('isZero')}"> zero is not allowed, </span>
+      <span [ngClass]="{'font-bold':yourForm.get('duration')?.hasError('outOfRange')}"> the value must be between 1 and 99 </span>
+    </div>
+  </section>
+  <section class="mt-12" id="map-type">
+  <div class="custom-arrow">
+    <select class="p-2 border-1 border-[#cfcfcf] block w-1/2 rounded-sm sel" formControlName="mapType" (change)="onSelectChange($event)">
+      <option value="" disabled selected>Map Type</option>
+      <option *ngFor="let type of mapTypes" [value]="type">{{ type }}</option>
+    </select>
+  </div>
+  <div class="custom-arrow">
+    <select class="p-2 border-1 border-[#cfcfcf] block w-1/2 mt-12 rounded-sm" formControlName="mapSubType">
+      <option value="" disabled selected>Map Sub Type</option>
+      <option *ngFor="let type of selectedDataArray" [value]="type">{{ type }}</option>
+      </select>
+  </div>
+  </section>
+  <section class="flex justify-between flex-row mt-12">
+    <button class="text-[#ea8c2b] border-yellow-400 border-2 px-12 py-1 font-bold tracking-wider hover:bg-yellow-400 transition rounded-sm hover:text-white active:bg-yellow-600 active:border-yellow-600" (click)="reset()">Reset</button>
+    <div class="flex justify-between gap-10">
+      <button type="submit" class="px-12 py-1 bg-[#768baa] text-white rounded-sm active:bg-[#607089] transition-all hover:bg-[#9ab5dd] disabled:bg-gray-500" (click)="save()" [disabled]="yourForm.invalid">
+        Save
+      </button>
+      <button class="px-12 py-1 text-red-500 hover:bg-[#ff4545] active:bg-[#832d2d] hover:text-white rounded-sm transition" (click)="cancel()">Cancel</button>
+    </div>
+  </section>
+</form>
+</div>
