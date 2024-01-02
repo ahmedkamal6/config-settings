@@ -13,7 +13,7 @@
 
     <div class="columns-2 relative gap-32 items-center">
       <div class="border-1 border-[#cfcfcf] px-4 py-px flex items-center rounded-sm relative">
-        <ng-icon class="text-red-600" name="ionAlertCircleOutline"></ng-icon><label class="basis-3/6" for="cluster-radius">Cluster Radius</label>
+        <ng-icon class="text-black w-4" name="ionStopCircleOutline"></ng-icon><label class="basis-3/6" for="cluster-radius">Cluster Radius</label>
         <input
           type="number"
           name="cluster-radius"
@@ -26,7 +26,7 @@
         <span class="basis-1/6 pl-8">M</span>
       </div>
       <div class="border-1 border-[#cfcfcf] px-4 py-2 flex items-center rounded-sm justify-between">
-        <div class="flex items-center"><ng-icon class="text-red-600" name="ionAlertCircleOutline"></ng-icon><label for="geo-fencing">Geo - fencing</label></div>
+        <div class="flex items-center"><ng-icon class="text-black" name="ionApertureSharp"></ng-icon><label for="geo-fencing">Geo - fencing</label></div>
         <mat-slide-toggle 
         name="geo-fencing"
         id="geo-fencing"
@@ -51,7 +51,7 @@
 
     <div class="columns-2 relative gap-32 items-center">
       <div class="border-1 border-[#cfcfcf] px-4 py-px flex items-center rounded-sm relative">
-        <ng-icon class="text-red-600" name="ionAlertCircleOutline"></ng-icon><label class="basis-3/6" for="time-buffer">Time Buffer</label>
+        <ng-icon class="text-black bold" name="ionTimeOutline"></ng-icon><label class="basis-3/6" for="time-buffer">Time Buffer</label>
         <input
       type="number"
       name="time-buffer"
@@ -64,7 +64,7 @@
       <span class="basis-1/6 pl-8">Minutes</span>
     </div>
       <div class="border-1 border-[#cfcfcf] px-4 py-px flex items-center rounded-sm justify-between relative">
-    <ng-icon class="text-red-600" name="ionAlertCircleOutline"></ng-icon><label class="basis-3/6" for="location-buffer">Location Buffer</label>
+    <ng-icon class="text-black" name="ionLocationSharp"></ng-icon><label class="basis-3/6" for="location-buffer">Location Buffer</label>
     <input
     type="number"
     name="location-buffer"
@@ -86,14 +86,15 @@
         <span [ngClass]="{'font-bold':yourForm.get('locationBuffer')?.hasError('outOfRange')}"> the value must be between 1 and 9.999 </span>
       </div>
   </section>
-  <section class="mt-12">
+
+  <section class="mt-12" id="duration">
     <div class="text-2xl font-bold mb-4">
       <h3 class="inline underline-offset-8 underline decoration-4  decoration-slate-700">End E</h3>
       <h3 class="inline">vent Duration</h3>
     </div>
     <div class="columns-2 relative gap-32 items-center">
       <div class="border-1 border-[#cfcfcf] px-4 py-px flex items-center rounded-sm justify-between relative">
-      <ng-icon class="text-red-600" name="ionAlertCircleOutline"></ng-icon><label class="basis-3/6" for="duration">Duration</label>
+      <ng-icon class="text-black" name="ionTimeOutline"></ng-icon><label class="basis-3/6" for="duration">Duration</label>
       <input
         type="number"
         name="duration"
@@ -111,6 +112,7 @@
       <span [ngClass]="{'font-bold':yourForm.get('duration')?.hasError('outOfRange')}"> the value must be between 1 and 99 </span>
     </div>
   </section>
+
   <section class="mt-12" id="map-type">
   <div class="custom-arrow">
     <select class="p-2 border-1 border-[#cfcfcf] block w-1/2 rounded-sm sel" formControlName="mapType" (change)="onSelectChange($event)">
@@ -125,7 +127,8 @@
       </select>
   </div>
   </section>
-  <section class="flex justify-between flex-row mt-12">
+
+  <section class="flex justify-between flex-row mt-12" id="buttons">
     <button class="text-[#ea8c2b] border-yellow-400 border-2 px-12 py-1 font-bold tracking-wider hover:bg-yellow-400 transition rounded-sm hover:text-white active:bg-yellow-600 active:border-yellow-600" (click)="reset()">Reset</button>
     <div class="flex justify-between gap-10">
       <button type="submit" class="px-12 py-1 bg-[#768baa] text-white rounded-sm active:bg-[#607089] transition-all hover:bg-[#9ab5dd] disabled:bg-gray-500" (click)="save()" [disabled]="yourForm.invalid">
@@ -134,5 +137,6 @@
       <button class="px-12 py-1 text-red-500 hover:bg-[#ff4545] active:bg-[#832d2d] hover:text-white rounded-sm transition" (click)="cancel()">Cancel</button>
     </div>
   </section>
+
 </form>
 </div>

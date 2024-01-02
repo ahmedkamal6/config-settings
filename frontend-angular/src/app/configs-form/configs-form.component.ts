@@ -8,8 +8,8 @@ import {
 } from '@angular/forms';
 import { mapType, mapSubTypeFeature, mapSubTypeBasemap } from './data';
 import { customNumValidator } from './custom-validators';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { ionAlertCircleOutline } from '@ng-icons/ionicons';
+import { NgIconComponent, provideIcons,provideNgIconsConfig } from '@ng-icons/core';
+import { ionAlertCircleOutline,ionStopCircleOutline,ionApertureSharp,ionTimeOutline,ionLocationSharp } from '@ng-icons/ionicons';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -23,28 +23,48 @@ import { HttpClient } from '@angular/common/http';
     NgIconComponent,
     MatSlideToggleModule,
   ],
-  providers: [provideIcons({ ionAlertCircleOutline })],
+  providers: [provideIcons({ ionAlertCircleOutline,ionStopCircleOutline,ionApertureSharp,ionTimeOutline,ionLocationSharp }),provideNgIconsConfig({
+    size: '1.5em',
+  }),],
   templateUrl: './configs-form.component.html',
   styleUrl: './configs-form.component.css',
 })
 @Injectable()
 export class ConfigsFormComponent {
+  mapTypes: string[] = mapType;
+  mapFeatureSubTypes: string[] = mapSubTypeFeature;
+  mapBasemapSubTypes: string[] = mapSubTypeBasemap;
+  selectedDataArray: string[] = []; // Array to store selected data array
+  mapSubTypes: string[] = [];
+  yourForm: FormGroup;
+  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+    this.yourForm = this.formBuilder.group({
+      clusterRadius: ['', customNumValidator(99, 0.01)],
+      geoFencing: [false],
+      timeBuffer: ['', customNumValidator(999, 1)],
+      locationBuffer: ['', customNumValidator(9.999, 1)],
+      duration: ['', customNumValidator(99, 1)],
+      mapType: ['', Validators.required],
+      mapSubType: ['', Validators.required],
+    });
+  }
   async ngOnInit() {
     try {
       const response = await this.http
-        .get<any>('https://localhost:7031/api/Config/getConfig?id=1')
-        .toPromise();
+      .get<any>('https://localhost:7031/api/Config/getConfig?id=1')
+      .toPromise();
+      console.log(response.data)
       if (response.data !== null) {
         this.yourForm.patchValue({
-          clusterRadius: response.data.clusterRadius || '', // Replace 'clusterRadius' with your actual field names
+          clusterRadius: response.data.clusterRadius || '',
           geoFencing: response.data.geoFencing || false,
           timeBuffer: response.data.timeBuffer || '',
           locationBuffer: response.data.locationBuffer || '',
           duration: response.data.duration || '',
           mapType:
-            response.data.mapType === 'Feature'
+            response.data.mapType === 'Features'
               ? this.mapTypes[0]
-              : response.data.mapType === 'Basemap'
+              : response.data.mapType === 'BaseMap'
               ? this.mapTypes[1]
               : '',
           mapSubType:
@@ -59,7 +79,7 @@ export class ConfigsFormComponent {
               : '',
         });
       }
-      this.yourForm.setValue({mapType:response.data.mapType})
+      this.selectedDataArray = this.yourForm.get('mapType')?.value === 'Features' ? mapSubTypeFeature : mapSubTypeBasemap
     } catch (error) {
       
     }
@@ -136,23 +156,6 @@ export class ConfigsFormComponent {
   }
   reset() {
     this.yourForm.reset();
-  }
-  mapTypes: string[] = mapType;
-  mapFeatureSubTypes: string[] = mapSubTypeFeature;
-  mapBasemapSubTypes: string[] = mapSubTypeBasemap;
-  selectedDataArray: string[] = []; // Array to store selected data array
-  mapSubTypes: string[] = [];
-  yourForm: FormGroup;
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
-    this.yourForm = this.formBuilder.group({
-      clusterRadius: ['', customNumValidator(99, 0.01)],
-      geoFencing: [false],
-      timeBuffer: ['', customNumValidator(999, 1)],
-      locationBuffer: ['', customNumValidator(9.999, 1)],
-      duration: ['', customNumValidator(99, 1)],
-      mapType: ['', Validators.required],
-      mapSubType: ['', Validators.required],
-    });
   }
 
   onSelectChange(event: any) {
