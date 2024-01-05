@@ -90,7 +90,10 @@ export class ConfigsFormComponent {
     try {
       console.log('here');
       const response = await this.http
-      .delete<any>('https://localhost:7031/api/Config/deleteConfig?id=1').toPromise();
+      .delete<any>('https://localhost:7031/api/Config/deleteConfig?id=1',{
+        headers:{
+        'Authorization':"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImFobWVkIiwiZXhwIjoxNzA0MjMzMDg3LCJpc3MiOiJTZWN1cmVBcGkiLCJhdWQiOiJVc2VycyJ9.s9FLD2hCLkeWzLREx29fXvPFq2j92FY1SAuzNwOnE4g"        
+      }}).toPromise();
       console.log(response)
       alert('config deleted successfully');
       this.reset()
@@ -107,12 +110,12 @@ export class ConfigsFormComponent {
           .toPromise();
         if (response.data === null) {
           const formData = this.yourForm.value;
-          console.log(formData)
           this.http
             .post('https://localhost:7031/api/Config/addConfig', formData, {
               headers: {
                 'Content-Type': 'application/json',
-              },
+                'Authorization':"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImFobWVkIiwiZXhwIjoxNzA0MjMzMDg3LCJpc3MiOiJTZWN1cmVBcGkiLCJhdWQiOiJVc2VycyJ9.s9FLD2hCLkeWzLREx29fXvPFq2j92FY1SAuzNwOnE4g"
+                },
             })
             .subscribe(
               (response) => {
@@ -132,6 +135,7 @@ export class ConfigsFormComponent {
               {
                 headers: {
                   'Content-Type': 'application/json',
+                  'Authorization':"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImFobWVkIiwiZXhwIjoxNzA0MjMzMDg3LCJpc3MiOiJTZWN1cmVBcGkiLCJhdWQiOiJVc2VycyJ9.s9FLD2hCLkeWzLREx29fXvPFq2j92FY1SAuzNwOnE4g"
                 },
               }
             )
